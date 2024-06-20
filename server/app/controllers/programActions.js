@@ -1,3 +1,5 @@
+const tables = require("../../database/tables");
+
 const programs = [
   {
     id: 1,
@@ -21,15 +23,17 @@ const programs = [
   },
 ];
 
-const browse = (req, res) => {
-  if (req.query.q != null) {
-    const filteredPrograms = programs.filter((program) =>
-      program.synopsis.includes(req.query.q)
-    );
-    res.json(filteredPrograms);
-  } else {
-    res.json(programs);
-  }
+const browse = async (req, res) => {
+  // if (req.query.q != null) {
+  //   const filteredPrograms = programs.filter((program) =>
+  //     program.synopsis.includes(req.query.q)
+  //   );
+  //   res.json(filteredPrograms);
+  // } else {
+  //   res.json(programs);
+  // }
+  const programsFromDB = await tables.program.readAll();
+  res.json(programsFromDB);
 };
 
 const read = (req, res) => {
